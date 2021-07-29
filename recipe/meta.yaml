@@ -34,36 +34,48 @@ requirements:
     - python
     - pip
     - cython
+    # 2021/7/29: update tests for incremental >= 21.3.0,
+    # see https://github.com/twisted/twisted/commit/ab934c065177422a7121e44c792c56c32962c4e4
+    #  it only uses for testing versions,
+    # see https://github.com/twisted/twisted/blob/twisted-21.7.0/src/twisted/python/test/test_versions.py 
     - incremental >=16.10.1
+    - setuptools >=35.0.2
+    - wheel >=0.29.0
   run:
     - python
     - pip
-    - attrs >=17.4.0
-    - automat >=0.3.0
+    - attrs >=19.2.0
+    - automat >=0.8.0
     - constantly >=15.1
     - hyperlink >=17.1.1
     - incremental >=16.10.1
     - pyhamcrest >=1.9.0
+    - typing_extensions >=3.6.5
     - twisted-iocpsupport >=1.0.1,<1.1.0a0  # [win]
     - zope.interface >=4.4.2
+    # serial deps
     - pywin32  # [win]
     # conch deps
-    - bcrypt
-    - cryptography >=1.5
+    - bcrypt >=3.0.0
+    - cryptography >=2.6
     - pyasn1
+    - appdirs >=1.4.0
     # tls deps
-    - idna >=0.6,!=2.3
+    - idna >=2.4
     - pyopenssl >=16.0.0
     - service_identity >=18.1.0
   run_constrained:
     # Moved all the crypto and tls stuff under 'run'
     - soappy  # [py2k and win]
+    # serial deps
     - pyserial >=3.0
+    # https2 deps
+    - h2 >=3.0,<4.0
+    - priority >=1.1.0,<2.0
+    # macos_platform
     - pyobjc-core  # [osx]
     - pyobjc-framework-cocoa  # [osx]
     # - pyobjc-framework-CFNetwork  # [osx]
-    - h2 >=3.0,<4.0
-    - priority >=1.1.0,<2.0
 
 test:
   imports:
@@ -109,6 +121,7 @@ test:
     - twisted.words.protocols.jabber
     - twisted.words.xish
   commands:
+    # pip check causes tests failed with an error "twisted 21.7.0 has requirement incremental>=21.3.0"
     - ckeygen --help
     # https://twistedmatrix.com/trac/ticket/1679
     - cftp --help  # [not win]

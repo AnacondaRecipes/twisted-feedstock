@@ -35,9 +35,9 @@ requirements:
     - python
     - pip
     - cython
-    - incremental >= 17.5.0
-    - setuptools >= 35.0.2
-    - wheel >= 0.29.0
+    - incremental >=17.5.0
+    - setuptools >=35.0.2
+    - wheel >=0.29.0
   run:
     - python
     - pip

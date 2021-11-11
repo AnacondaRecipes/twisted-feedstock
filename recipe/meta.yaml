@@ -10,6 +10,7 @@ source:
 
 build:
   number: 0
+  skip: True  # [py<37]
   entry_points:
     - ckeygen = twisted.conch.scripts.ckeygen:run
     - cftp = twisted.conch.scripts.cftp:run
@@ -34,25 +35,29 @@ requirements:
     - python
     - pip
     - cython
-    - incremental >=16.10.1
+    - incremental >= 17.5.0
+    - setuptools >= 35.0.2
+    - wheel >= 0.29.0
   run:
     - python
     - pip
-    - attrs >=17.4.0
-    - automat >=0.3.0
+    - attrs >=19.2.0
+    - automat >=0.8.0
     - constantly >=15.1
     - hyperlink >=17.1.1
-    - incremental >=16.10.1
+    - incremental >=17.5.0
     - pyhamcrest >=1.9.0
+    - typing_extensions >=3.6.5
     - twisted-iocpsupport >=1.0.1,<1.1.0a0  # [win]
     - zope.interface >=4.4.2
     - pywin32  # [win]
     # conch deps
-    - bcrypt
-    - cryptography >=1.5
+    - appdirs >= 1.4.0
+    - bcrypt >=3.0.0
+    - cryptography >=2.6
     - pyasn1
     # tls deps
-    - idna >=0.6,!=2.3
+    - idna >=2.4
     - pyopenssl >=16.0.0
     - service_identity >=18.1.0
   run_constrained:
@@ -108,7 +113,13 @@ test:
     - twisted.words.protocols
     - twisted.words.protocols.jabber
     - twisted.words.xish
+  requires:
+    - pip
+    - pyhamcrest >=1.9.0
+    # In test env twisted 21.7.0 requires typing_extensions for twisted/internet/defer.py", line 38
+    - typing_extensions >=3.6.5
   commands:
+    - pip check
     - ckeygen --help
     # https://twistedmatrix.com/trac/ticket/1679
     - cftp --help  # [not win]

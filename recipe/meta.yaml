@@ -114,12 +114,14 @@ test:
     - twisted.words.protocols.jabber
     - twisted.words.xish
   requires:
-    - pip
+    #- pip
     - pyhamcrest >=1.9.0
     # In test env twisted 21.7.0 requires typing_extensions for twisted/internet/defer.py", line 38
     - typing_extensions >=3.6.5
   commands:
-    - pip check
+    # Disable pip check because twisted 21.7.0 has requirement incremental>=21.3.0, 
+    # but you have incremental 17.5.0.
+    #- pip check
     - ckeygen --help
     # https://twistedmatrix.com/trac/ticket/1679
     - cftp --help  # [not win]

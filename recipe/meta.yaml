@@ -52,7 +52,7 @@ requirements:
     - zope.interface >=4.4.2
     - pywin32  # [win]
     # conch deps
-    - appdirs >= 1.4.0
+    - appdirs >=1.4.0
     - bcrypt >=3.0.0
     - cryptography >=2.6
     - pyasn1

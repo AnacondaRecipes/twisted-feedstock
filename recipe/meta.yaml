@@ -48,7 +48,7 @@ requirements:
     - incremental >=21.3.0
     - pyhamcrest >=1.9.0
     - typing_extensions >=3.6.5
-    - twisted-iocpsupport >=1.0.1,<1.1.0a0  # [win]
+    - twisted-iocpsupport >=1.0.2,<2  # [win]
     - zope.interface >=4.4.2
     - pywin32  # [win]
     # conch deps
@@ -132,7 +132,7 @@ test:
     - twistd --help
 
 about:
-  home: http://twistedmatrix.com/
+  home: https://twistedmatrix.com/
   license: MIT
   license_file: LICENSE
   license_family: MIT

@@ -1,4 +1,4 @@
-{% set version = "21.7.0" %}
+{% set version = "22.2.0" %}
 
 package:
   name: twisted
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/T/Twisted/Twisted-{{ version }}.tar.gz
-  sha256: 2cd652542463277378b0d349f47c62f20d9306e57d1247baabd6d1d38a109006
+  sha256: 57f32b1f6838facb8c004c89467840367ad38e9e535f8252091345dba500b4f2
 
 build:
   number: 0
@@ -48,7 +48,7 @@ requirements:
     - incremental >=21.3.0
     - pyhamcrest >=1.9.0
     - typing_extensions >=3.6.5
-    - twisted-iocpsupport >=1.0.1,<1.1.0a0  # [win]
+    - twisted-iocpsupport >=1.0.2,<2  # [win]
     - zope.interface >=4.4.2
     - pywin32  # [win]
     # conch deps
@@ -132,7 +132,7 @@ test:
     - twistd --help
 
 about:
-  home: http://twistedmatrix.com/
+  home: https://twistedmatrix.com/
   license: MIT
   license_file: LICENSE
   license_family: MIT

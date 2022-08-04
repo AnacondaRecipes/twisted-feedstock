@@ -9,7 +9,7 @@ source:
   sha256: 57f32b1f6838facb8c004c89467840367ad38e9e535f8252091345dba500b4f2
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<37]
   entry_points:
     - ckeygen = twisted.conch.scripts.ckeygen:run

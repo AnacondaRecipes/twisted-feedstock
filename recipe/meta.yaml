@@ -35,12 +35,11 @@ requirements:
     - python
     - pip
     - cython
-    - incremental >=21.3.0
-    - setuptools >=35.0.2
-    - wheel >=0.29.0
+    - setuptools 
+    - wheel
+    - incremental 21.3.0
   run:
     - python
-    - pip
     - attrs >=19.2.0
     - automat >=0.8.0
     - constantly >=15.1

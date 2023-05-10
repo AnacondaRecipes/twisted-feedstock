@@ -1,17 +1,16 @@
-{% set version = "22.2.0" %}
+{% set version = "22.10.0" %}
 
 package:
   name: twisted
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/T/Twisted/Twisted-{{ version }}.tar.gz
-  sha256: 57f32b1f6838facb8c004c89467840367ad38e9e535f8252091345dba500b4f2
+  url: https://github.com/twisted/twisted/archive/twisted-22.10.0/twisted-twisted-{{ version }}.tar.gz
+  sha256: 2a310f83278b54d8e8e2b9d804baf839835f80ab5b42e141a370cdc170dd7ddb
 
 build:
-  number: 1
-  # trigger: 0
-  skip: True  # [py<37]
+  number: 0
+  skip: true  # [py<37]
   entry_points:
     - ckeygen = twisted.conch.scripts.ckeygen:run
     - cftp = twisted.conch.scripts.cftp:run
@@ -27,7 +26,7 @@ build:
     - pushd src\twisted\internet\iocpreactor\iocpsupport  # [win]
     - cythonize -a -i iocpsupport.pyx  # [win]
     - popd  # [win]
-    - {{ PYTHON }} -m pip install . --no-deps -vv
+    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vvv
 
 requirements:
   build:
@@ -47,7 +46,6 @@ requirements:
     - constantly >=15.1
     - hyperlink >=17.1.1
     - incremental >=21.3.0
-    - pyhamcrest >=1.9.0
     - typing_extensions >=3.6.5
     - twisted-iocpsupport >=1.0.2,<2  # [win]
     - zope.interface >=4.4.2
@@ -59,16 +57,15 @@ requirements:
     - pyasn1
     # tls deps
     - idna >=2.4
-    - pyopenssl >=16.0.0
+    - pyopenssl >=21.0.0
     - service_identity >=18.1.0
   run_constrained:
     # Moved all the crypto and tls stuff under 'run'
-    - soappy  # [py2k and win]
     - pyserial >=3.0
     - pyobjc-core                   # [osx]
     - pyobjc-framework-cocoa        # [osx]
     # - pyobjc-framework-CFNetwork  # [osx]
-    - h2 >=3.0,<4.0
+    - h2 >=3.0,<5.0
     - priority >=1.1.0,<2.0
 
 test:
@@ -133,7 +130,7 @@ test:
     - twistd --help
 
 about:
-  home: https://twistedmatrix.com/
+  home: https://twisted.org/
   license: MIT
   license_file: LICENSE
   license_family: MIT
@@ -141,8 +138,7 @@ about:
   description: |
     Twisted is an event-driven networking engine written in Python.
     It runs on Python 2 and an ever growing subset also works with Python 3.
-  doc_url: http://twistedmatrix.com/documents/current/
-  doc_source_url: https://github.com/twisted/twisted/blob/trunk/docs/index.rst
+  doc_url: https://docs.twisted.org/en/stable/
   dev_url: https://github.com/twisted/twisted
 
 extra:

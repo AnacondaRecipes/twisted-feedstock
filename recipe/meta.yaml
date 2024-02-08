@@ -115,7 +115,7 @@ test:
     - pyhamcrest >=1.9.0
   commands:
     - pip check
-    - ckeygen --help
+    - ckeygen --help # [py<312] uses imp, removed in 3.12
     # https://twistedmatrix.com/trac/ticket/1679
     - cftp --help  # [not win]
     - conch --help  # [not win]

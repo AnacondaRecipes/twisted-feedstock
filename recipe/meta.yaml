@@ -1,4 +1,4 @@
-{% set version = "23.10.0" %}
+{% set version = "24.11.0" %}
 
 package:
   name: twisted
@@ -6,9 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/t/twisted/twisted-{{ version }}.tar.gz 
-  sha256: 987847a0790a2c597197613686e2784fd54167df3a55d0fb17c8412305d76ce5
-  patches:
-    - patches/0001-remove-fancy-pypi-readme.patch
+  sha256: 695d0556d5ec579dcc464d2856b634880ed1319f45b10d19043f2b57eb0115b5
 
 build:
   number: 0
@@ -26,30 +24,27 @@ build:
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
-  build:
-    - patch # [unix]
-    - m2-patch # [win]
   host:
     - python
     - pip
     - hatchling >=1.10.0
-    - incremental >=22.10.0 
+    - hatch-fancy-pypi-readme >=22.5.0
+    - incremental >=24.7.0 
   run:
     - python
-    - attrs >=21.3.0
-    - automat >=0.8.0
-    - constantly >=15.1
-    - hyperlink >=17.1.1
-    - incremental >=22.10.0
-    - typing_extensions >=4.2.0
-    - twisted-iocpsupport >=1.0.2,<2  # [win]
     - zope.interface >=5
-    - pywin32  # [win]
+    - constantly >=15.1
+    - incremental >=24.7.0
+    - automat >=24.8.0
+    - hyperlink >=17.1.1
+    - attrs >=22.2.0
+    - typing_extensions >=4.2.0
+    - twisted-iocpsupport >=1.0.2  # [win]
+    - pywin32 !=226  # [win]
     # conch deps
     - appdirs >=1.4.0
     - bcrypt >=3.1.3
     - cryptography >=3.3
-    - pyasn1
     # tls deps
     - idna >=2.4
     - pyopenssl >=21.0.0

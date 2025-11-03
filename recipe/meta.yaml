@@ -107,12 +107,13 @@ test:
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     # Following command runs tests according to the package documentation. Skip due to many test failures unrelated to build.
     # - python -m twisted.trial twisted
+    # https://github.com/twisted/twisted/issues/11211
+    - cftp --help  # [not win]
+    - conch --help  # [not win]
     - ckeygen --help
-    - cftp --help
-    - conch --help
     - mailmail --version
     - pyhtmlizer --help
-    - tkconch --help
+    - tkconch --version
     - trial --help
     - twist --help
     - twistd --help

@@ -1,13 +1,13 @@
 {% set name = "twisted" %}
-{% set version = "26.4.0" %}
+{% set version = "26.10.0rc1" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz 
-  sha256: dbfd0fe1ee409d0243fdd7a6a6ff14f4948cec1fd78e0376291f805e1501fae9
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a2201fed4dd4919b0fe732aa2c4ac95e4dff3ba04cfc10b1383e7aac29005e27
 
 build:
   number: 0
@@ -22,7 +22,7 @@ build:
     - twist = twisted.application.twist._twist:Twist.main
     - twistd = twisted.scripts.twistd:run
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -30,26 +30,26 @@ requirements:
     - pip
     - hatchling >=1.10.0
     - hatch-fancy-pypi-readme >=22.5.0
-    - incremental >=24.7.0 
+    - incremental >=24.7.1
   run:
     - python
-    - zope.interface >=5
+    - zope.interface >=8
     - constantly >=15.1
     - incremental >=24.7.0
-    - automat >=24.8.0
-    - hyperlink >=17.1.1
+    - automat >=24.8.1
+    - hyperlink >=18.0.0
     - attrs >=22.2.0
-    - typing_extensions >=4.2.0
+    - typing_extensions >=4.13.2
     # tls
-    - pyopenssl >=25.2.0
-    - service_identity >=18.1.0
-    - idna >=2.4
+    - pyopenssl >=25.3.0
+    - service_identity >=21.1.0
+    - idna >=2.5
     # conch
-    - cryptography >=38
+    - cryptography >=46
     - appdirs >=1.4.0
     - bcrypt >=3.2.1
     # websocket
-    - wsproto
+    - wsproto >=1.2.0
     # windows-platform
     - twisted-iocpsupport >=1.0.2  # [win]
     - pywin32 !=226  # [win]
@@ -58,11 +58,11 @@ requirements:
     # serial
     - pyserial >=3.0
     # macos-platform
-    - pyobjc-core >=12  # [py>=310 and osx]
-    - pyobjc-framework-cfnetwork >=12  # [py>=310 and osx]
-    - pyobjc-framework-cocoa >=12  # [py>=310 and osx]
+    - pyobjc-core >=12  # [osx]
+    - pyobjc-framework-cfnetwork >=12  # [osx]
+    - pyobjc-framework-cocoa >=12  # [osx]
     # http2
-    - h2 >=3.0,<5.0
+    - h2 >=3.2,<5.0
     - priority >=1.1.0,<2.0
 
 test:
@@ -112,9 +112,10 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    # Following command runs tests according to the package documentation. Skip due to many test failures unrelated to build.
-    # - python -m twisted.trial twisted
-    # https://github.com/twisted/twisted/issues/11211
+    # Upstream's full trial suite is not runnable here: twisted.test.test_failure needs
+    # cython-test-exception-raiser (not packaged on pkgs/main) and the THREADEDSELECT
+    # reactor tests error on macOS/Windows. This subset needs no extra test deps.
+    - python -m twisted.trial twisted._threads twisted.application twisted.cred twisted.enterprise twisted.logger twisted.mail twisted.names twisted.pair twisted.persisted twisted.positioning twisted.runner twisted.scripts twisted.spread twisted.tap twisted.words
     - cftp --help  # [not win]
     - conch --help  # [not win]
     - ckeygen --help

@@ -1,0 +1,11 @@
+--- a/src/twisted/python/filepath.py
++++ b/src/twisted/python/filepath.py
+@@ -68,7 +68,7 @@
+     O_BINARY,
+ )
+ 
+-if sys.version_info <= (3, 12):
++if sys.version_info < (3, 13):
+     from pathlib import PureWindowsPath
+ 
+ # Please keep this as light as possible on other Twisted imports; many, many

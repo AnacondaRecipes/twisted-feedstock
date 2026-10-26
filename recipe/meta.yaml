@@ -9,10 +9,8 @@ source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: a2201fed4dd4919b0fe732aa2c4ac95e4dff3ba04cfc10b1383e7aac29005e27
   patches:
-    # 26.10.0rc1 guards the PureWindowsPath import with `<= (3, 12)`, so it is
-    # undefined on 3.12.x while _isreserved() still uses it -> NameError on
-    # Windows/3.12. Drop once upstream ships the fix.
-    - patches/fix-purewindowspath-import.patch
+     # win/py3.12: PureWindowsPath import guard off-by-one -> NameError; drop when fixed upstream
+    - patches/fix-purewindowspath-import.patch  # [win and py ==312]
 
 build:
   number: 0

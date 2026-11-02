@@ -45,6 +45,10 @@ requirements:
     - hyperlink >=18.0.0
     - attrs >=22.2.0
     - typing_extensions >=4.13.2
+  run_constrained:
+    # upstream declares the entries below as optional feature extras
+    # (`twisted[tls]`, `[conch]`, `[websocket]`, `[windows-platform]`, ...): they are
+    # constrained, not installed, so the extras stay the user's opt-in
     # tls
     - pyopenssl >=25.3.0
     - service_identity >=21.1.0
@@ -58,8 +62,6 @@ requirements:
     # windows-platform
     - twisted-iocpsupport >=1.0.2  # [win]
     - pywin32 !=226  # [win]
-  run_constrained:
-    # Moved all the crypto and tls stuff under 'run'
     # serial
     - pyserial >=3.0
     # macos-platform
@@ -114,13 +116,24 @@ test:
     - twisted.words.xish
   requires:
     - pip
+    # the tls / conch / websocket extras are run_constrained only; install them here so
+    # the TLS tests and the conch/web/words imports are actually exercised
+    - pyopenssl >=25.3.0
+    - service_identity >=21.1.0
+    - idna >=2.5
+    - cryptography >=46
+    - appdirs >=1.4.0
+    - bcrypt >=3.2.1
+    - wsproto >=1.2.0
+    - twisted-iocpsupport >=1.0.2  # [win]
+    - pywin32 !=226  # [win]
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     # Upstream's suite is trial-based, so `pytest -vv` is not applicable. The full
     # `twisted` package cannot run here: twisted.test needs cython-test-exception-raiser
     # (not on pkgs/main) and twisted.internet/twisted.web/twisted.trial error on the
-    # platform reactor tests. The subset below needs no extra test dependencies.
+    # platform reactor tests.
     - python -m twisted.trial
       twisted._threads twisted.application twisted.cred twisted.enterprise
       twisted.logger twisted.mail twisted.names twisted.pair twisted.persisted

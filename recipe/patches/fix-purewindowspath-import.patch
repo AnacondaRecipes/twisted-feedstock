@@ -1,0 +1,29 @@
+From 7c40de4471f3ee1356c0b5176398d1caeb121e00 Mon Sep 17 00:00:00 2001
+From: Andrii Vetroumov <avetroumov@anaconda.com>
+Date: Mon, 2 Nov 2026 12:04:52 +0200
+Subject: [PATCH] fix: import PureWindowsPath on Python 3.12 on Windows
+
+filepath.py guards the PureWindowsPath import with 'sys.version_info <= (3, 12)'
+but defines _isreserved() (which uses it) whenever 'sys.version_info < (3, 13)'.
+On Windows with Python 3.12 the comparison against the 2-tuple is False, so the
+name is never imported and every _windowsChecks() call raises NameError.
+
+Use the same guard as _isreserved so the import is present wherever it is used.
+Droppable once fixed upstream (still present on trunk as of 26.10.0).
+---
+ src/twisted/python/filepath.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/twisted/python/filepath.py b/src/twisted/python/filepath.py
+index 49f04d0..41f4a5d 100644
+--- a/src/twisted/python/filepath.py
++++ b/src/twisted/python/filepath.py
+@@ -68,7 +68,7 @@ from twisted.python.win32 import (
+     O_BINARY,
+ )
+ 
+-if sys.version_info <= (3, 12):
++if sys.version_info < (3, 13):
+     from pathlib import PureWindowsPath
+ 
+ # Please keep this as light as possible on other Twisted imports; many, many
